@@ -1,4 +1,4 @@
-#include "preproccessing.h"
+﻿#include "preproccessing.h"
 
 #include <QJsonArray>
 #include <QVariantMap>
@@ -115,13 +115,21 @@ void Preproccessing::LoadDataset(){
 
         }
     cout << "set train test precentage " << endl;
+    this->datasetModel.inputs_names = temp_date_set.get_input_variables_names();
+    this->datasetModel.targets_names = temp_date_set.get_target_variables_names();
+
     temp_date_set.split_samples_random(this->config.trainPrcentage,this->config.testPrcentage);
-    cout << "create train file" << endl;
-    int a = this->config.numberInput;
-    Tensor < double,2 > training_input = temp_date_set.get_training_input_data();
-    Tensor < double ,2> training_target = temp_date_set.get_training_target_data();
-    cout << "create train file" << endl;
+    this->datasetModel.input_variables_number = temp_date_set.get_input_variables_number();
+    this->datasetModel.target_variables_number = temp_date_set.get_target_variables_number();
 
+    this->datasetModel.scaling_inputs_methods(this->datasetModel.input_variables_number);
+    this->datasetModel.scaling_inputs_methods.setConstant("MinimumMaximum");
 
+    this->datasetModel.scaling_target_methods(this->datasetModel.target_variables_number);
+    this->datasetModel.scaling_target_methods.setConstant("MinimumMaximum");
+
+    this->datasetModel.inputs_descriptives =  temp_date_set.scale_input_variables(this->datasetModel.scaling_inputs_methods);
+    this->datasetModel.target_descriptives = temp_date_set.scale_target_variables(this->datasetModel.scaling_target_methods);
+    this->datasetModel.date_set  = temp_date_set;
 
 }

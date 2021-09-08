@@ -11,6 +11,7 @@ using namespace std;
 #include "../opennn/opennn.h"
 
 using namespace OpenNN;
+
 class Preproccessing
 {
 public:
@@ -19,8 +20,9 @@ public:
     bool CheckDatabase();
     Config config;
     QSqlDatabase db;
-    DataSet date_set;
     void LoadDataset();
+    DatasetStructure datasetModel;
+
 };
 
 

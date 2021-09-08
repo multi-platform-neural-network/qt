@@ -25,6 +25,7 @@ DESTDIR = "$$PWD/bin"
 SOURCES += main.cpp \
     config.cpp \
     enums.cpp \
+    network.cpp \
     preproccessing.cpp
 
 win32-g++{
@@ -78,6 +79,7 @@ LIBS += /usr/local/opt/libomp/lib/libomp.dylib}
 HEADERS += \
     config.h \
     enums.h \
+    network.h \
     preproccessing.h
 
 DISTFILES +=
